@@ -8,14 +8,14 @@ public class Task {
     
     private long id = 1L;
     private String task;
-    private String createdBy;
+    private Author author;
 
     public Task() {}
 
-    public Task(String task, String createdBy) {
+    public Task(String task, Author author) {
         
         this.task = task;
-        this.createdBy = createdBy;
+        this.author = author;
         
     }
    
@@ -35,12 +35,12 @@ public class Task {
         this.task = task;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" + "id=" + id + ", task=" + task + ", createdBy=" + createdBy + '}';
+        return "Task{" + "id=" + id + ", task=" + task + ", author=" + author + '}';
     }
     
     

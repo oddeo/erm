@@ -14,9 +14,7 @@
     <body>
         <h1>ERM Web Service</h1>
         <ul>
-            <li><a href="/ERM/TaskServiceImplService?wsdl">Task Service</a></li>
-            <li><a href="/ERM/CommentServiceImplService?wsdl">Comment Service</a></li>
-            <li><a href="/ERM/RosterServiceImplService?wsdl">Roster Service</a></li>
+            <li><a href="/erm/InteractionServiceImplService?wsdl">Interaction Service</a></li>
         </ul>
         
     </body>

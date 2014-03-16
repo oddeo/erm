@@ -1,29 +1,28 @@
-package erm.service.comment;
+package erm.model.svc.comment;
 
+import erm.model.domain.Author;
 import erm.model.domain.Comment;
 import java.util.ArrayList;
 import java.util.List;
-import javax.jws.WebService;
 
 /**
  * @version 1.0
  * @author danieljones
  */
-@WebService(endpointInterface="erm.service.comment.CommentService")
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl implements ICommentService {
 
     @Override
     public Comment getComment(long id) {
 
-        return new Comment("get comment", "danny jones");
+        return new Comment("I am a comment", new Author("danny","jones","djones"));
         
     }
 
     @Override
     public List<Comment> getAllComments() {
         
-        Comment c1 = new Comment("comment1", "danny");
-        Comment c2 = new Comment("comment2", "jones");
+        Comment c1 = new Comment("comment1", new Author("danny","jones","djones"));
+        Comment c2 = new Comment("comment2", new Author("danny","jones","djones"));
         List<Comment> cList = new ArrayList<>();
         cList.add(c1);
         cList.add(c2);

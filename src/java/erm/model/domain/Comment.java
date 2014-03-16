@@ -9,15 +9,20 @@ public class Comment {
 
     private long id = 1L;
     private String comment;
-    private String createdBy;
+    private Author author;
     
     
     public Comment() {}
     
-    public Comment(String comment, String createdBy) {
+    /**
+     *
+     * @param comment
+     * @param author
+     */
+    public Comment(String comment, Author author) {
         
         this.comment = comment;
-        this.createdBy = createdBy;
+        this.author = author;
         
     }
     
@@ -47,12 +52,12 @@ public class Comment {
     }
     
 
-    public String getCreatedBy() {
-        return createdBy;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
     
     @Override
@@ -79,9 +84,9 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id 
-                + ", comment=" + comment 
-                + ", createdBy=" + createdBy + '}';
+        return "Comment{" + "id=" + id + ", comment=" + comment + ", author=" + author + '}';
     }
+
+    
     
 }

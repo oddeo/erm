@@ -1,16 +1,14 @@
-package erm.service.roster;
+package erm.model.svc.roster;
 
 import erm.model.domain.Employee;
 import java.util.ArrayList;
 import java.util.List;
-import javax.jws.WebService;
 
 /**
  * @version 1.0
  * @author danieljones
  */
-@WebService(endpointInterface="erm.service.roster.RosterService")
-public class RosterServiceImpl implements RosterService {
+public class RosterServiceImpl implements IRosterService {
 
     @Override
     public Employee getEmployee(long id) {
