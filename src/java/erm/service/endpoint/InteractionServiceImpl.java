@@ -2,7 +2,9 @@ package erm.service.endpoint;
 
 import erm.model.business.manager.InteractionManager;
 import erm.model.domain.Interaction;
+import erm.model.business.exception.InvalidInteractionException;
 import java.util.List;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 
@@ -12,6 +14,7 @@ import javax.jws.WebService;
  * @author danieljones
  */
 @WebService(endpointInterface="erm.service.endpoint.InteractionService")
+@HandlerChain(file="handler-chain.xml")
 public class InteractionServiceImpl implements InteractionService {
     
     //Static InteractionManager
@@ -32,14 +35,16 @@ public class InteractionServiceImpl implements InteractionService {
     }
 
     @Override
-    public boolean saveInteraction(Interaction interaction) {
+    public boolean saveInteraction(Interaction interaction) 
+            throws InvalidInteractionException {
         
         return iMgr.saveInteraction(interaction);
         
     }
 
     @Override
-    public long createInteraction(Interaction interaction) { 
+    public long createInteraction(Interaction interaction) 
+            throws InvalidInteractionException { 
         
         return iMgr.createInteraction(interaction);
         

@@ -1,5 +1,6 @@
 package erm.model.business.manager;
 
+import erm.model.business.exception.InvalidInteractionException;
 import erm.model.business.exception.ServiceLoadException;
 import erm.model.domain.Comment;
 import erm.model.domain.Interaction;
@@ -111,13 +112,20 @@ public class InteractionManager extends Manager implements InteractionService {
     }
 
     @Override
-    public boolean saveInteraction(Interaction interaction) {
+    public boolean saveInteraction(Interaction interaction) 
+            throws InvalidInteractionException {
 
         boolean result = false;
         boolean comResult = true;
         boolean taskResult = true;
 
         try {
+            
+            if(interaction.getComment() == null) {
+
+                throw new InvalidInteractionException("Comment is required", interaction.toString());
+
+            }            
 
             ICommentService commentService = (ICommentService) getService(ICommentService.NAME);
             if (interaction.getComment() != null) {
@@ -139,6 +147,14 @@ public class InteractionManager extends Manager implements InteractionService {
             }
 
             result = comResult && taskResult;
+            
+        } catch (InvalidInteractionException iie) {
+
+            Logger.getLogger("Service Error : " + iie.getFaultInfo()).
+                    log(Level.SEVERE, null, iie);
+            
+            // rethrow the exception
+            throw iie;
 
         } catch (ServiceLoadException sle) {
 
@@ -154,8 +170,26 @@ public class InteractionManager extends Manager implements InteractionService {
     }
 
     @Override
-    public long createInteraction(Interaction interaction) {
+    public long createInteraction(Interaction interaction) 
+            throws InvalidInteractionException {
 
+      try {        
+        
+          if(interaction.getComment() == null) {
+              
+            throw new InvalidInteractionException("Comment is required", interaction.toString());
+            
+          }         
+        } catch (InvalidInteractionException iie) {
+
+            Logger.getLogger("Service Error : " + iie.getFaultInfo()).
+                    log(Level.SEVERE, null, iie);
+            
+            // rethrow the exception
+            throw iie;
+
+        }
+      
         return 1L;
 
     }
