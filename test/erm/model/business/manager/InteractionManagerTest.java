@@ -6,12 +6,15 @@
 
 package erm.model.business.manager;
 
+import erm.model.business.exception.InvalidInteractionException;
 import erm.model.domain.Author;
 import erm.model.domain.Comment;
 import erm.model.domain.Interaction;
 import erm.model.domain.Task;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -78,19 +81,47 @@ public class InteractionManagerTest {
      */
     @Test
     public void testSaveInteraction() {
-        System.out.println("saveInteraction");
-        InteractionManager instance = InteractionManager.getInstance();
-        boolean expResult = true;
-        Comment comment = new Comment("test comment", new Author("danny","jones","djones"));
-        Task task = new Task("test task", new Author("danny","jones","djones"));
-        List<Task> tasks = new ArrayList<>();
-        tasks.add(task);
+        try {
+            System.out.println("saveInteraction");
+            InteractionManager instance = InteractionManager.getInstance();
+            boolean expResult = true;
+            Comment comment = new Comment("test comment", new Author("danny","jones","djones"));
+            Task task = new Task("test task", new Author("danny","jones","djones"));
+            List<Task> tasks = new ArrayList<>();
+            tasks.add(task);
+            
+            Interaction interaction = new Interaction(comment, tasks);
+            
+            boolean result = instance.saveInteraction(interaction);
+            
+            assertEquals(expResult, result);
+            
+        } catch (InvalidInteractionException ex) {
+            
+            fail("Unexptected formatting exception: " + ex.getMessage());
+        }
+
+    }
+    
+    @Test
+    public void testSaveInteractionRequiresComment() {
         
-        Interaction interaction = new Interaction(comment, tasks);
+        String expResult = "Comment is required";
         
-        boolean result = instance.saveInteraction(interaction);
-        
-        assertEquals(expResult, result);
+        try {
+            System.out.println("saveInteractionRequiresComment");
+            InteractionManager instance = InteractionManager.getInstance();
+            
+            // purposely excluding a comment to throw error
+            Interaction interaction = new Interaction();
+            
+            boolean result = instance.saveInteraction(interaction);
+            
+            
+        } catch (InvalidInteractionException ex) {
+            
+            assertEquals(expResult, ex.getMessage());
+        }
 
     }
 
@@ -99,21 +130,51 @@ public class InteractionManagerTest {
      */
     @Test
     public void testCreateInteraction() {
-        System.out.println("createInteraction");
+        try {
+            System.out.println("createInteraction");
+            
+            Comment comment = new Comment("test comment", new Author("danny","jones","djones"));
+            Task task = new Task("test task", new Author("danny","jones","djones"));
+            List<Task> tasks = new ArrayList<>();
+            tasks.add(task);
+            
+            Interaction interaction = new Interaction(comment, tasks);
+            
+            InteractionManager instance = InteractionManager.getInstance();
+            
+            long expResult = 1L;
+            long result = instance.createInteraction(interaction);
+            
+            assertEquals(expResult, result);
+            
+        } catch (InvalidInteractionException ex) {
+            
+            fail("Unexptected formatting exception: " + ex.getMessage());
+            
+        }
+
+    }
+    
+    @Test
+    public void testCreateInteractionRequiresComment() {
         
-        Comment comment = new Comment("test comment", new Author("danny","jones","djones"));
-        Task task = new Task("test task", new Author("danny","jones","djones"));
-        List<Task> tasks = new ArrayList<>();
-        tasks.add(task);
+        String expResult = "Comment is required";
         
-        Interaction interaction = new Interaction(comment, tasks);
-        
-        InteractionManager instance = InteractionManager.getInstance();
-        
-        long expResult = 1L;
-        long result = instance.createInteraction(interaction);
-        
-        assertEquals(expResult, result);
+        try {
+            System.out.println("createInteractionRequiresComment");
+            
+            // excluding comment on purpose
+            Interaction interaction = new Interaction();
+            
+            InteractionManager instance = InteractionManager.getInstance();
+            
+            long result = instance.createInteraction(interaction);
+            
+        } catch (InvalidInteractionException ex) {
+            
+            assertEquals(expResult, ex.getMessage());
+            
+        }
 
     }
 
