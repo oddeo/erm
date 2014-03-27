@@ -78,7 +78,7 @@ public class RosterServiceImplTest {
         Employee employee = new Employee("first", "last", "test manager");
         RosterServiceImpl instance = new RosterServiceImpl();
         boolean expResult = true;
-        boolean result = instance.setManager(employee);
+        boolean result = instance.saveEmployee(employee);
         assertEquals(expResult, result);
 
     }

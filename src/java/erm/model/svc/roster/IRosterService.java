@@ -15,7 +15,7 @@ public interface IRosterService extends IService {
     
     public Employee getEmployee(long id);
     public List<Employee> getMyRoster(long leaderId);
-    public boolean setManager(Employee employee);
+    public boolean saveEmployee(Employee employee);
     public long createEmployee(Employee employee);
     public boolean deleteEmployee(long id);
     
