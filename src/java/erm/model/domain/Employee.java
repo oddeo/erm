@@ -1,10 +1,14 @@
 package erm.model.domain;
 
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @version 1.0
  * @author danieljones
  */
-public class Employee {
+@XmlRootElement(name = "Employee")
+public class Employee implements Serializable {
     
     private long id = 1L;
     private String firstName;
