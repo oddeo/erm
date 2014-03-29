@@ -24,6 +24,8 @@ import java.util.logging.Logger;
 public class InteractionManager extends Manager implements InteractionService {
 
     private static InteractionManager _managerInstance;
+    private static final String FATAL_ERR_MSG = "Fatal Error : One or more services " 
+            + "failed to load while processing interaction";
 
     private InteractionManager() {
     }
@@ -63,7 +65,7 @@ public class InteractionManager extends Manager implements InteractionService {
 
         } catch (ServiceLoadException sle) {
 
-            Logger.getLogger("Fatal Error : Comment Service failed to load").
+            Logger.getLogger(FATAL_ERR_MSG).
                     log(Level.SEVERE, null, sle);
 
             System.exit(1);
@@ -96,7 +98,7 @@ public class InteractionManager extends Manager implements InteractionService {
 
         } catch (ServiceLoadException sle) {
 
-            Logger.getLogger("Fatal Error : Comment Service failed to load").
+            Logger.getLogger(FATAL_ERR_MSG).
                     log(Level.SEVERE, null, sle);
 
             System.exit(1);
@@ -158,7 +160,7 @@ public class InteractionManager extends Manager implements InteractionService {
 
         } catch (ServiceLoadException sle) {
 
-            Logger.getLogger("Fatal Error : Comment Service failed to load").
+            Logger.getLogger(FATAL_ERR_MSG).
                     log(Level.SEVERE, null, sle);
 
             System.exit(1);

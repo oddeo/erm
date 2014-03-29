@@ -1,11 +1,15 @@
 
 package erm.model.domain;
 
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @version 1.0
  * @author danieljones
  */
-public class Comment {
+@XmlRootElement(name = "Comment")
+public class Comment implements Serializable {
 
     private long id = 1L;
     private String comment;

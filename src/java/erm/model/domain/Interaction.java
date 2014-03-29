@@ -1,14 +1,17 @@
 package erm.model.domain;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The DTO used to pass data to and from the web service endpoint
  * @version 1.0
  * @author danieljones
  */
-public class Interaction {
+@XmlRootElement(name = "Interaction")
+public class Interaction implements Serializable {
     
     private Comment comment;
     private List<Task> tasks;
