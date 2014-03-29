@@ -24,7 +24,7 @@ public class InteractionResource {
     InteractionManager iMgr = InteractionManager.getInstance();
     
     @GET
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("{id}")
     public Response getEmployee(@PathParam("id") int id) {
         
@@ -34,7 +34,7 @@ public class InteractionResource {
     }
     
     @GET
-    @Produces("application/xml")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getAllInteractions() {
         
         List<Interaction> interactions = iMgr.getAllInteractions();

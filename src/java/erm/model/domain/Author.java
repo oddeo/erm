@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 1.0
  * @author danieljones
  */
-@XmlRootElement(name = "Author")
+@XmlRootElement(name = "author")
 public class Author implements Serializable {
     
     private String firstName;

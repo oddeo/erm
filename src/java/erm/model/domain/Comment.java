@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 1.0
  * @author danieljones
  */
-@XmlRootElement(name = "Comment")
+@XmlRootElement(name = "comment")
 public class Comment implements Serializable {
 
     private long id = 1L;

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 1.0
  * @author danieljones
  */
-@XmlRootElement(name = "Task")
+@XmlRootElement(name = "task")
 public class Task implements Serializable {
     
     private long id = 1L;

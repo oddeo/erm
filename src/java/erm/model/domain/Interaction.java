@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 1.0
  * @author danieljones
  */
-@XmlRootElement(name = "Interaction")
+@XmlRootElement(name = "interaction")
 public class Interaction implements Serializable {
     
     private Comment comment;
