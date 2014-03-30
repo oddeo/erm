@@ -88,14 +88,14 @@ public class EmployeeResource {
     }
     
     @PUT
-    @Produces({MediaType.TEXT_PLAIN})
-    @Path("/{firstName}/{lastName}/{manager}")
-    public Response update(@PathParam("firstName") String firstName,
-                           @PathParam("lastName") String lastName,
-                           @PathParam("manager") String manager) {
+    @Produces({MediaType.TEXT_PLAIN})    
+    @Path("/update")
+    public Response update(Employee employee) {
         
         String msg;
-        if((firstName == null || lastName == null) || manager == null) {
+        if((employee.getFirstName() == null || 
+            employee.getLastName() == null) || 
+            employee.getManager() == null) {
             
             msg = "Employee not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).
@@ -105,9 +105,9 @@ public class EmployeeResource {
             
         } else {
             
-            Employee emp = new Employee(firstName,lastName,manager);
-            boolean result = rMgr.saveEmployee(emp);
-            msg = "Employee: '" + firstName + " " + lastName +
+            boolean result = rMgr.saveEmployee(employee);
+            msg = "Employee: '" + employee.getFirstName() + 
+                  " " + employee.getLastName() +
                     "' updated? '" + result + "'";
             
         }
@@ -118,7 +118,7 @@ public class EmployeeResource {
     
     @DELETE
     @Produces({MediaType.TEXT_PLAIN})
-    @Path("{id: \\d+}")
+    @Path("/delete/{id: \\d+}")
     public Response delete(@PathParam("id") int id) {
         
         String msg;
