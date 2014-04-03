@@ -1,8 +1,11 @@
 package erm.service.endpoint;
 
+import erm.model.business.manager.EmployeeMgr;
 import erm.model.business.manager.RosterManager;
 import erm.model.domain.Employee;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,10 +29,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
  * @author danieljones
  */
 @Path("/employees")
+@RequestScoped
 public class EmployeeResource {
     
-    //Static RosterManager
-    RosterManager rMgr = RosterManager.getInstance();
+    @Inject
+    private EmployeeMgr mgr;
     
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -39,21 +43,9 @@ public class EmployeeResource {
      */
     public Response getEmployee(@PathParam("id") int id) {
         
-        ResponseBuilder builder = Response.ok(rMgr.getEmployee(id)); //id
+        ResponseBuilder builder = Response.ok(mgr.read(id)); //id
         
         return builder.build();
-    }
-    
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getAllEmployees() {
-        
-        List<Employee> employees = rMgr.getMyRoster(1L);
-        GenericEntity entity = new GenericEntity<List<Employee>>(employees){};
-        ResponseBuilder builder = Response.ok(entity);
-        
-        return builder.build();
-        
     }
     
     @POST
@@ -75,11 +67,8 @@ public class EmployeeResource {
             
         } else {
             
-            long empId = rMgr.createEmployee(employee);
-            msg = "New employee: '" + employee.getFirstName() + 
-                  " " + employee.getLastName() +
-                  "' created with manager: '" + employee.getManager() +
-                  "' and id: '" + empId + "'";
+            Employee empl = mgr.create(employee);
+            msg = "New employee created: '" + empl;
             
         }
         
@@ -105,10 +94,8 @@ public class EmployeeResource {
             
         } else {
             
-            boolean result = rMgr.saveEmployee(employee);
-            msg = "Employee: '" + employee.getFirstName() + 
-                  " " + employee.getLastName() +
-                    "' updated? '" + result + "'";
+            Employee empl = mgr.update(employee);
+            msg = "Employee updated: '" + empl;
             
         }
         
@@ -118,18 +105,19 @@ public class EmployeeResource {
     
     @DELETE
     @Produces({MediaType.TEXT_PLAIN})
-    @Path("/delete/{id: \\d+}")
+    @Path("/delete")
     public Response delete(@PathParam("id") int id) {
         
         String msg;
         if(id >= 0) {
             
-            boolean result = rMgr.deleteEmployee(id);
-            msg = "Employee deleted? '" + result + "'";
+            Employee empl = mgr.read(id);
+            mgr.delete(empl);
+            msg = "Employee deleted: '" + empl + "'";
             
         } else {
             
-            msg = "Employee not passed in request";
+            msg = "Employee id not passed in request";
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(msg).
                     type(MediaType.TEXT_PLAIN).
