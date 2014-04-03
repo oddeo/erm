@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name="employee")
 public class Employee implements Serializable {
     
-    private long id = 1L;
+    private int id = 0;
     private String firstName;
     private String lastName;
     private String manager;
@@ -33,11 +33,11 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue
     @Column(name="id")
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
