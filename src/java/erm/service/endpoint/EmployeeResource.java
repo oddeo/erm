@@ -114,31 +114,15 @@ public class EmployeeResource {
     @DELETE
     @Path("/delete/{id: \\d+}")
     public void delete(@PathParam("id") int id) {
-        
-        String msg;
-        if(id >= 0) {
             
-            Employee empl = mgr.read(id);
-            mgr.delete(empl);
-            msg = "Employee deleted: '" + empl + "'";
-            
-        } else {
-            
-            msg = "Employee id not passed in request";
-            //return Response.status(Response.Status.BAD_REQUEST).
-                    //entity(msg).
-                    //type(MediaType.TEXT_PLAIN).
-                    //build();
-            
-        }
-        
-        //return Response.ok(msg, MediaType.TEXT_PLAIN).build();
+        Employee empl = mgr.read(id);
+        mgr.delete(empl);
         
     }
     
     private Response getResponse(int id) {
         
-        ResponseBuilder builder = Response.ok(mgr.read(id)); //id
+        ResponseBuilder builder = Response.ok(mgr.read(id)); 
         
         return builder.build();        
         
