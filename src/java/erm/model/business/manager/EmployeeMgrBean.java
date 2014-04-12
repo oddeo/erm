@@ -78,7 +78,33 @@ public class EmployeeMgrBean implements EmployeeMgr {
         
         em = emf.createEntityManager();
         
-        return em.merge(emp);
+        try {
+            
+            utx.begin();
+            em.merge(emp);
+            utx.commit();
+            
+        } catch (Exception e) {
+            
+            Logger.getLogger(
+                    EmployeeMgrBean.class.getName())
+                    .log(Level.SEVERE, null, e);
+            
+            try {
+                
+                utx.rollback();
+                
+            } catch (IllegalStateException | SecurityException | SystemException ex) {
+                
+                Logger.getLogger(
+                        EmployeeMgrBean.class.getName())
+                        .log(Level.SEVERE, null, e);
+                
+            }
+            
+        }
+        
+        return emp;
         
     }
 
@@ -87,7 +113,31 @@ public class EmployeeMgrBean implements EmployeeMgr {
         
         em = emf.createEntityManager();
         
-        em.remove(emp);
+        try {
+            
+            utx.begin();
+            em.remove(em.merge(emp));
+            utx.commit();
+            
+        } catch (Exception e) {
+            
+            Logger.getLogger(
+                    EmployeeMgrBean.class.getName())
+                    .log(Level.SEVERE, null, e);
+            
+            try {
+                
+                utx.rollback();
+                
+            } catch (IllegalStateException | SecurityException | SystemException ex) {
+                
+                Logger.getLogger(
+                        EmployeeMgrBean.class.getName())
+                        .log(Level.SEVERE, null, e);
+                
+            }
+            
+        }
         
     }
     

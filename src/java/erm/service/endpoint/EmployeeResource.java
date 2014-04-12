@@ -1,9 +1,7 @@
 package erm.service.endpoint;
 
 import erm.model.business.manager.EmployeeMgr;
-import erm.model.business.manager.RosterManager;
 import erm.model.domain.Employee;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -14,7 +12,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -28,6 +25,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
  * @version 1.0
  * @author danieljones
  */
+@Produces("text/*")
 @Path("/employees")
 @RequestScoped
 public class EmployeeResource {
@@ -36,20 +34,30 @@ public class EmployeeResource {
     private EmployeeMgr mgr;
     
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("{id: \\d+}")
+    @Produces({MediaType.APPLICATION_XML})
+    @Path("{id: \\d+}.xml")
     /**
      * Only accepts id with digits between 0 and 9
      */
-    public Response getEmployee(@PathParam("id") int id) {
+    public Response getEmployeeXml(@PathParam("id") int id) {       
         
-        ResponseBuilder builder = Response.ok(mgr.read(id)); //id
+        return getResponse(id);
         
-        return builder.build();
     }
     
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("{id: \\d+}.json")
+    /**
+     * Only accepts id with digits between 0 and 9
+     */
+    public Response getEmployeeJson(@PathParam("id") int id) {
+        
+        return getResponse(id);
+        
+    }    
+    
     @POST
-    @Produces({MediaType.TEXT_PLAIN})
     @Path("/create")
     @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response create(Employee employee) {
@@ -76,9 +84,9 @@ public class EmployeeResource {
         
     }
     
-    @PUT
-    @Produces({MediaType.TEXT_PLAIN})    
+    @PUT  
     @Path("/update")
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response update(Employee employee) {
         
         String msg;
@@ -104,9 +112,8 @@ public class EmployeeResource {
     }
     
     @DELETE
-    @Produces({MediaType.TEXT_PLAIN})
-    @Path("/delete")
-    public Response delete(@PathParam("id") int id) {
+    @Path("/delete/{id: \\d+}")
+    public void delete(@PathParam("id") int id) {
         
         String msg;
         if(id >= 0) {
@@ -118,14 +125,22 @@ public class EmployeeResource {
         } else {
             
             msg = "Employee id not passed in request";
-            return Response.status(Response.Status.BAD_REQUEST).
-                    entity(msg).
-                    type(MediaType.TEXT_PLAIN).
-                    build();
+            //return Response.status(Response.Status.BAD_REQUEST).
+                    //entity(msg).
+                    //type(MediaType.TEXT_PLAIN).
+                    //build();
             
         }
         
-        return Response.ok(msg, MediaType.TEXT_PLAIN).build();
+        //return Response.ok(msg, MediaType.TEXT_PLAIN).build();
+        
+    }
+    
+    private Response getResponse(int id) {
+        
+        ResponseBuilder builder = Response.ok(mgr.read(id)); //id
+        
+        return builder.build();        
         
     }
     

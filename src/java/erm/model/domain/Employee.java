@@ -29,6 +29,13 @@ public class Employee implements Serializable {
         this.lastName = lastName;
         this.manager = manager;
     }
+    
+    public Employee(int id, String firstName, String lastName, String manager) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.manager = manager;
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue
