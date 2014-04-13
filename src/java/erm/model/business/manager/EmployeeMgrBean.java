@@ -1,6 +1,7 @@
 package erm.model.business.manager;
 
 import erm.model.domain.Employee;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +11,7 @@ import javax.transaction.UserTransaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
+import javax.persistence.TypedQuery;
 import javax.transaction.SystemException;
 
 /**
@@ -72,16 +74,28 @@ public class EmployeeMgrBean implements EmployeeMgr {
         return employee;
         
     }
+    
+    @Override
+    public List<Employee> readAll() {
+        
+        em = emf.createEntityManager();
+        TypedQuery<Employee> query =
+              em.createQuery("SELECT e FROM Employee e", Employee.class);
+          List<Employee> results = query.getResultList();
+        return results;
+        
+    }
 
     @Override
     public Employee update(Employee emp) {
         
         em = emf.createEntityManager();
+        Employee returnEmp = new Employee();
         
         try {
             
             utx.begin();
-            em.merge(emp);
+            returnEmp = em.merge(emp);
             utx.commit();
             
         } catch (Exception e) {
@@ -104,7 +118,7 @@ public class EmployeeMgrBean implements EmployeeMgr {
             
         }
         
-        return emp;
+        return returnEmp;
         
     }
 

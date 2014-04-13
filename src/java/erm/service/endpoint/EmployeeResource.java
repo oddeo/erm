@@ -2,6 +2,7 @@ package erm.service.endpoint;
 
 import erm.model.business.manager.EmployeeMgr;
 import erm.model.domain.Employee;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -32,6 +33,28 @@ public class EmployeeResource {
     
     @Inject
     private EmployeeMgr mgr;
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path(".json")
+    public List<Employee> getEmployeesJson() {
+        
+        List<Employee> el = mgr.readAll();
+        
+        return el;
+        
+    } 
+    
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    @Path(".xml")
+    public List<Employee> getEmployeesXml() {
+        
+        List<Employee> el = mgr.readAll();
+        
+        return el;
+        
+    }
     
     @GET
     @Produces({MediaType.APPLICATION_XML})

@@ -1,6 +1,7 @@
 package erm.model.business.manager;
 
 import erm.model.domain.Employee;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -10,6 +11,7 @@ public interface EmployeeMgr {
     
     public Employee create(Employee emp);
     public Employee read(int id);
+    public List<Employee> readAll();
     public Employee update(Employee emp);
     public void delete(Employee emp);
     
