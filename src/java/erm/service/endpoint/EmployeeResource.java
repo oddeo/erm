@@ -13,9 +13,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Variant;
 
 /**
  * RESTful call for employee resource
@@ -57,32 +61,40 @@ public class EmployeeResource {
     }
     
     @GET
-    @Produces({MediaType.APPLICATION_XML})
-    @Path("{id: \\d+}.xml")
+    @Path("{id: \\d+}")
     /**
      * Only accepts id with digits between 0 and 9
+     * Uses the ?format= querystring param to allow consumer to defined content type
+     * accepts xml or json as param values
+     * if anything else is passed then the method returns a 406 status code (not acceptable)
      */
-    public Response getEmployeeXml(@PathParam("id") int id) {       
+    public Response getEmployee(@PathParam("id") int id,
+            @QueryParam("format") String format) { 
         
-        return getResponse(id);
+        ResponseBuilder builder = null;
         
-    }
-    
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id: \\d+}.json")
-    /**
-     * Only accepts id with digits between 0 and 9
-     */
-    public Response getEmployeeJson(@PathParam("id") int id) {
+        if(format == null || "xml".equalsIgnoreCase(format)) {
+            
+           builder = Response.ok(mgr.read(id)).type(MediaType.APPLICATION_XML);
+            
+        } else if ("json".equalsIgnoreCase(format)) {
+            
+           builder = Response.ok(mgr.read(id)).type(MediaType.APPLICATION_JSON);             
+            
+        } else {
+            
+            throw new WebApplicationException(Status.UNSUPPORTED_MEDIA_TYPE);
+            
+        }
         
-        return getResponse(id);
+        return builder.build();  
         
     }    
     
     @POST
     @Path("/create")
-    @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_XML})
+    //@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response create(Employee employee) {
         
         String msg;
@@ -143,12 +155,5 @@ public class EmployeeResource {
         
     }
     
-    private Response getResponse(int id) {
-        
-        ResponseBuilder builder = Response.ok(mgr.read(id)); 
-        
-        return builder.build();        
-        
-    }
     
 }

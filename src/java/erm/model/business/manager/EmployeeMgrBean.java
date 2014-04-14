@@ -11,7 +11,10 @@ import javax.transaction.UserTransaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
+import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 
 /**
