@@ -1,5 +1,5 @@
 
-package erm.model.domain;
+package erm.domain;
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;

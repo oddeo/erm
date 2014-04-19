@@ -1,10 +1,10 @@
-package erm.model.business.exception;
+package erm.business.exception;
 
 /**
  * @version 1.0
  * @author danieljones
  */
-public class InvalidInteractionException extends Exception {
+public class InvalidCommentException extends Exception {
     
     String details;
 
@@ -12,7 +12,7 @@ public class InvalidInteractionException extends Exception {
      * Creates a new instance of <code>InvalidInteractionException</code>
      * without detail message.
      */
-    public InvalidInteractionException() {
+    public InvalidCommentException() {
     }
 
     /**
@@ -22,7 +22,7 @@ public class InvalidInteractionException extends Exception {
      * @param reason
      * @param details
      */
-    public InvalidInteractionException(String reason, String details) {
+    public InvalidCommentException(String reason, String details) {
         super(reason);
         this.details = details;
     }

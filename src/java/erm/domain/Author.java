@@ -1,4 +1,4 @@
-package erm.model.domain;
+package erm.domain;
 
 import java.io.Serializable;
 import java.util.Objects;

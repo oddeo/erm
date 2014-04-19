@@ -17,7 +17,7 @@ public class RestClassMapper extends Application {
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(EmployeeResource.class);
-        classes.add(InteractionResource.class);
+        classes.add(CommentResource.class);
         return classes;
     }
     

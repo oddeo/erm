@@ -1,6 +1,6 @@
-package erm.model.business.manager;
+package erm.business.manager;
 
-import erm.model.domain.Employee;
+import erm.domain.Employee;
 import java.util.List;
 
 /**

@@ -1,7 +1,7 @@
 package erm.service.endpoint;
 
-import erm.business.manager.EmployeeMgr;
-import erm.domain.Employee;
+import erm.domain.Comment;
+import erm.business.manager.CommentMgr;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -21,28 +21,25 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 /**
- * RESTful call for employee resource
- * all GET methods in this service should return json or xml depending
- * on the application type sent in the header request
- * i.e. for json
- * curl --header "Accept: application/json" http://localhost:8080/erm/rest/employees
+ * Interaction Resource Aggregates Domain Objects into a logical DTO
+ *
  * @version 1.0
  * @author danieljones
  */
+@Path("/comments")
 @Produces("text/*")
-@Path("/employees")
 @RequestScoped
-public class EmployeeResource {
-    
+public class CommentResource {
+
     @Inject
-    private EmployeeMgr mgr;
-    
+    private CommentMgr mgr;
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path(".json")
-    public List<Employee> getEmployeesJson() {
+    public List<Comment> getCommentsJson() {
         
-        List<Employee> el = mgr.readAll();
+        List<Comment> el = mgr.readAll();
         
         return el;
         
@@ -51,9 +48,9 @@ public class EmployeeResource {
     @GET
     @Produces({MediaType.APPLICATION_XML})
     @Path(".xml")
-    public List<Employee> getEmployeesXml() {
+    public List<Comment> getCommentsXml() {
         
-        List<Employee> el = mgr.readAll();
+        List<Comment> el = mgr.readAll();
         
         return el;
         
@@ -67,7 +64,7 @@ public class EmployeeResource {
      * accepts xml or json as param values
      * if anything else is passed then the method returns a 406 status code (not acceptable)
      */
-    public Response getEmployee(@PathParam("id") int id,
+    public Response getComment(@PathParam("id") int id,
             @QueryParam("format") String format) { 
         
         ResponseBuilder builder = null;
@@ -94,14 +91,12 @@ public class EmployeeResource {
     @Path("/create")
     @Consumes({MediaType.APPLICATION_XML})
     //@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Response create(Employee employee) {
+    public Response create(Comment comment) {
         
         String msg;
-        if((employee.getFirstName() == null || 
-            employee.getLastName() == null) || 
-            employee.getManager() == null) {
+        if(comment.getComment() == null) {
             
-            msg = "Employee not passed in request";   
+            msg = "Comment incomplete or not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(msg).
                     type(MediaType.TEXT_PLAIN).
@@ -109,8 +104,8 @@ public class EmployeeResource {
             
         } else {
             
-            Employee empl = mgr.create(employee);
-            msg = "New employee created: '" + empl;
+            Comment result = mgr.create(comment);
+            msg = "New comment created: '" + result;
             
         }
         
@@ -121,14 +116,12 @@ public class EmployeeResource {
     @PUT  
     @Path("/update")
     @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Response update(Employee employee) {
+    public Response update(Comment comment) {
         
         String msg;
-        if((employee.getFirstName() == null || 
-            employee.getLastName() == null) || 
-            employee.getManager() == null) {
+        if(comment.getComment() == null) {
             
-            msg = "Employee not passed in request";   
+            msg = "Comment incomplete or not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(msg).
                     type(MediaType.TEXT_PLAIN).
@@ -136,8 +129,8 @@ public class EmployeeResource {
             
         } else {
             
-            Employee empl = mgr.update(employee);
-            msg = "Employee updated: '" + empl;
+            Comment result = mgr.update(comment);
+            msg = "Comment updated: '" + result;
             
         }
         
@@ -149,10 +142,9 @@ public class EmployeeResource {
     @Path("/delete/{id: \\d+}")
     public void delete(@PathParam("id") int id) {
             
-        Employee empl = mgr.read(id);
-        mgr.delete(empl);
+        Comment comment = mgr.read(id);
+        mgr.delete(comment);
         
     }
-    
-    
+
 }

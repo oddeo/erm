@@ -1,4 +1,4 @@
-package erm.service;
+package erm.business.exception;
 
 import javax.persistence.RollbackException;
 import javax.ws.rs.core.Response;
