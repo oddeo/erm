@@ -97,9 +97,8 @@ public class EmployeeResource {
     public Response create(Employee employee) {
         
         String msg;
-        if((employee.getFirstName() == null || 
-            employee.getLastName() == null) || 
-            employee.getManager() == null) {
+        if(employee.getFirstName() == null || 
+            employee.getLastName() == null) {
             
             msg = "Employee not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).
@@ -124,9 +123,8 @@ public class EmployeeResource {
     public Response update(Employee employee) {
         
         String msg;
-        if((employee.getFirstName() == null || 
-            employee.getLastName() == null) || 
-            employee.getManager() == null) {
+        if(employee.getFirstName() == null || 
+            employee.getLastName() == null) {
             
             msg = "Employee not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).

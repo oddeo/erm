@@ -25,8 +25,28 @@
         &lt;employee&gt;<br />
         &nbsp;&nbsp;&lt;firstName&gt;dan&lt;/firstName&gt;<br />
         &nbsp;&nbsp;&lt;lastName&gt;jones&lt;/lastName&gt;<br />
-        &nbsp;&nbsp;&lt;manager&gt;bob&lt;/manager&gt;<br />
         &nbsp;&nbsp;&lt;id&gt;1&lt;/id&gt;<br />
         &lt;/employee&gt;
+        <br />
+        <br />
+        <strong>Comment XML Example</strong>
+        <br />
+        &lt;comment&gt;<br />
+        &nbsp;&nbsp;&lt;text&gt;comment text&lt;/text&gt;<br />
+        &nbsp;&nbsp;&lt;employeeId&gt;1&lt;/employeeId&gt;<br />
+        &nbsp;&nbsp;&lt;authorId&gt;1&lt;/authorId&gt;<br />
+        &lt;/comment&gt;
+        <br />
+        <br />
+        <strong>Author XML Example</strong>: The id is only required when 
+        updating an existing author
+        <br />
+        &lt;author&gt;<br />
+        &nbsp;&nbsp;&lt;firstName&gt;bill&lt;/firstName&gt;<br />
+        &nbsp;&nbsp;&lt;lastName&gt;plimpton&lt;/lastName&gt;<br />
+        &nbsp;&nbsp;&lt;id&gt;1&lt;/id&gt;<br />
+        &lt;/author&gt;
+        <br />
+        <br />       
     </body>
 </html>

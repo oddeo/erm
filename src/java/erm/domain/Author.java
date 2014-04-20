@@ -2,6 +2,11 @@ package erm.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -9,18 +14,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author danieljones
  */
 @XmlRootElement(name = "author")
+@Entity
 public class Author implements Serializable {
     
+    @Id
+    @GeneratedValue
+    @Column(name="AUTHOR_ID") 
+    private int id;
     private String firstName;
     private String lastName;
-    private String authorId;
 
     public Author() {}
 
-    public Author(String firstName, String lastName, String authorId) {
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.authorId = authorId;
+    }
+    
+    public Author(int id, String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+    }
+       
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -39,18 +61,9 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.authorId);
+        int hash = 5;
         return hash;
     }
 
@@ -63,7 +76,13 @@ public class Author implements Serializable {
             return false;
         }
         final Author other = (Author) obj;
-        if (!Objects.equals(this.authorId, other.authorId)) {
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
         return true;
@@ -71,9 +90,10 @@ public class Author implements Serializable {
 
     @Override
     public String toString() {
-        return "Author{" + "firstName=" + firstName + ", lastName=" + lastName + ", authorId=" + authorId + '}';
+        return "Author{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
-    
+
+
     
     
     

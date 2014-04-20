@@ -1,7 +1,7 @@
 package erm.service.endpoint;
 
-import erm.domain.Comment;
-import erm.business.manager.CommentMgr;
+import erm.business.manager.AuthorMgr;
+import erm.domain.Author;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -21,25 +21,22 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 /**
- * Interaction Resource Aggregates Domain Objects into a logical DTO
- *
  * @version 1.0
  * @author danieljones
  */
-@Path("/comments")
 @Produces("text/*")
+@Path("/authors")
 @RequestScoped
-public class CommentResource {
-
-    @Inject
-    private CommentMgr mgr;
-
+public class AuthorResource {
+    
+    @Inject AuthorMgr mgr;
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path(".json")
-    public List<Comment> getCommentsJson() {
+    public List<Author> getAuthorsJson() {
         
-        List<Comment> el = mgr.readAll();
+        List<Author> el = mgr.readAll();
         
         return el;
         
@@ -48,9 +45,9 @@ public class CommentResource {
     @GET
     @Produces({MediaType.APPLICATION_XML})
     @Path(".xml")
-    public List<Comment> getCommentsXml() {
+    public List<Author> getAuthorsXml() {
         
-        List<Comment> el = mgr.readAll();
+        List<Author> el = mgr.readAll();
         
         return el;
         
@@ -64,7 +61,7 @@ public class CommentResource {
      * accepts xml or json as param values
      * if anything else is passed then the method returns a 406 status code (not acceptable)
      */
-    public Response getComment(@PathParam("id") int id,
+    public Response getEmployee(@PathParam("id") int id,
             @QueryParam("format") String format) { 
         
         ResponseBuilder builder = null;
@@ -91,12 +88,13 @@ public class CommentResource {
     @Path("/create")
     @Consumes({MediaType.APPLICATION_XML})
     //@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Response create(Comment comment) {
+    public Response create(Author author) {
         
         String msg;
-        if(comment.getText() == null) {
+        if(author.getFirstName() == null || 
+            author.getLastName() == null) {
             
-            msg = "Comment incomplete or not passed in request";   
+            msg = "Author not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(msg).
                     type(MediaType.TEXT_PLAIN).
@@ -104,8 +102,8 @@ public class CommentResource {
             
         } else {
             
-            Comment result = mgr.create(comment);
-            msg = "New comment created: '" + result;
+            Author result = mgr.create(author);
+            msg = "New author created: '" + result;
             
         }
         
@@ -116,12 +114,13 @@ public class CommentResource {
     @PUT  
     @Path("/update")
     @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Response update(Comment comment) {
+    public Response update(Author author) {
         
         String msg;
-        if(comment.getText() == null) {
+        if(author.getFirstName() == null || 
+            author.getLastName() == null) {
             
-            msg = "Comment incomplete or not passed in request";   
+            msg = "Author not passed in request";   
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(msg).
                     type(MediaType.TEXT_PLAIN).
@@ -129,8 +128,8 @@ public class CommentResource {
             
         } else {
             
-            Comment result = mgr.update(comment);
-            msg = "Comment updated: '" + result;
+            Author result = mgr.update(author);
+            msg = "Employee updated: '" + author;
             
         }
         
@@ -142,9 +141,9 @@ public class CommentResource {
     @Path("/delete/{id: \\d+}")
     public void delete(@PathParam("id") int id) {
             
-        Comment comment = mgr.read(id);
-        mgr.delete(comment);
+        Author result = mgr.read(id);
+        mgr.delete(result);
         
-    }
-
+    }    
+    
 }

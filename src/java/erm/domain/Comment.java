@@ -1,7 +1,11 @@
-
 package erm.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -9,65 +13,101 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author danieljones
  */
 @XmlRootElement(name = "comment")
+@Entity
 public class Comment implements Serializable {
 
-    private long id = 1L;
-    private String comment;
-    private Author author;
+    @Id
+    @GeneratedValue
+    @Column(name = "COMMENT_ID")
+    private int id = 0;
     
+    private String text;
     
-    public Comment() {}
+    @Column(name = "AUTHOR_ID")
+    private int authorId;
     
+    @Column(name = "EMPLOYEE_ID")
+    private int employeeId;
+
+    public Comment() {
+    }
+
     /**
      *
-     * @param comment
-     * @param author
+     * @param text
+     * @param authorId
+     * @param employeeId
      */
-    public Comment(String comment, Author author) {
-        
-        this.comment = comment;
-        this.author = author;
-        
+    public Comment(String text, int authorId, int employeeId) {
+
+        this.text = text;
+        this.authorId = authorId;
+        this.employeeId = employeeId;
+
     }
-    
-     /**
+
+    /**
+     *
+     * @param id
+     * @param text
+     * @param authorId
+     * @param employeeId
+     */
+    public Comment(int id, String text, int authorId, int employeeId) {
+
+        this.text = text;
+        this.authorId = authorId;
+        this.employeeId = employeeId;
+        this.id = id;
+
+    }
+
+    /**
      * Get the value of id
+     *
      * @return the value of id
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * Set the value of id
+     *
      * @param id new value of id
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-
-    public String getComment() {
-        return comment;
+    public String getText() {
+        return text;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setText(String text) {
+        this.text = text;
     }
+
     
-
-    public Author getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
-    
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -83,14 +123,21 @@ public class Comment implements Serializable {
         if (this.id != other.id) {
             return false;
         }
+        if (!Objects.equals(this.text, other.text)) {
+            return false;
+        }
+        if (this.authorId != other.authorId) {
+            return false;
+        }
+        if (this.employeeId != other.employeeId) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", comment=" + comment + ", author=" + author + '}';
+        return "Comment{" + "id=" + id + ", text=" + text + ", authorId=" + authorId + ", employeeId=" + employeeId + '}';
     }
 
-    
-    
 }

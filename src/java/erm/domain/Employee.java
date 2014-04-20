@@ -1,11 +1,11 @@
 package erm.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,32 +14,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "employee")
 @Entity
-@Table(name="employee")
 public class Employee implements Serializable {
     
+    @Id
+    @GeneratedValue
+    @Column(name="EMPLOYEE_ID")
     private int id = 0;
     private String firstName;
     private String lastName;
-    private String manager;
 
     public Employee() {}
 
-    public Employee(String firstName, String lastName, String manager) {
+    public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.manager = manager;
     }
     
-    public Employee(int id, String firstName, String lastName, String manager) {
+    public Employee(int id, String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.manager = manager;
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name="id")
     public int getId() {
         return id;
     }
@@ -64,18 +60,9 @@ public class Employee implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 7;
         return hash;
     }
 
@@ -91,16 +78,21 @@ public class Employee implements Serializable {
         if (this.id != other.id) {
             return false;
         }
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Employee{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", manager=" + manager + '}';
+        return "Employee{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
-    
-    
-    
+
+
     
     
 }
