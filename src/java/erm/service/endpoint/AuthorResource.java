@@ -31,6 +31,13 @@ public class AuthorResource {
     
     @Inject AuthorMgr mgr;
     
+    public AuthorResource(){}
+    public AuthorResource(AuthorMgr mgr) {
+        
+        this.mgr = mgr;
+        
+    }
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path(".json")
@@ -61,7 +68,7 @@ public class AuthorResource {
      * accepts xml or json as param values
      * if anything else is passed then the method returns a 406 status code (not acceptable)
      */
-    public Response getEmployee(@PathParam("id") int id,
+    public Response getAuthor(@PathParam("id") int id,
             @QueryParam("format") String format) { 
         
         ResponseBuilder builder = null;
@@ -129,7 +136,7 @@ public class AuthorResource {
         } else {
             
             Author result = mgr.update(author);
-            msg = "Employee updated: '" + author;
+            msg = "Author updated: '" + author;
             
         }
         

@@ -16,6 +16,14 @@ public class AuthorMgrBean implements AuthorMgr {
     
     @PersistenceContext(unitName="ERMPU")
     EntityManager em;
+    
+    
+    public AuthorMgrBean(){}
+    public AuthorMgrBean(EntityManager em) {
+        
+        this.em = em;
+        
+    }
 
     @Override
     public Author create(Author author) {

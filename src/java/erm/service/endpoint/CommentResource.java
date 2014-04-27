@@ -33,6 +33,13 @@ public class CommentResource {
 
     @Inject
     private CommentMgr mgr;
+    
+    public CommentResource(){}
+    public CommentResource(CommentMgr mgr) {
+        
+        this.mgr = mgr;
+        
+    }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})

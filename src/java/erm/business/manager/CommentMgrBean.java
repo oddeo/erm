@@ -16,6 +16,13 @@ public class CommentMgrBean implements CommentMgr {
     
     @PersistenceContext(unitName="ERMPU")
     EntityManager em;
+    
+    public CommentMgrBean(){}
+    public CommentMgrBean(EntityManager em) {
+        
+        this.em = em;
+        
+    }
 
     @Override
     public Comment create(Comment comment) {

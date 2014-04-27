@@ -37,6 +37,14 @@ public class EmployeeResource {
     @Inject
     private EmployeeMgr mgr;
     
+    public EmployeeResource(){}
+    
+    public EmployeeResource(EmployeeMgr mgr) {
+        
+        this.mgr = mgr;
+        
+    }
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path(".json")
